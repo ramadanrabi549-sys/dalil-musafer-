@@ -4,7 +4,14 @@
   "description": "كل اللي تحتاجه للسفر في تطبيق واحد",
   "start_url": "/dalil-musafer-/",
   "display": "standalone",
-  "background_color": "#0EA5E9",
-  "theme_color": "#0EA5E9",
-  "orientation": "portrait"
+  "background_color": "#0EAE69",
+  "theme_color": "#0EAE69",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-512.jpeg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
 }
