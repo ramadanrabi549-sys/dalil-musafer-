@@ -1,46 +1,147 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>دليل المسافر Pro</title>
-  <link rel="manifest" href="manifest.json">
-  <style>
-    :root { --primary: #007AFF; --secondary: #FF3B30; --dark: #1C1C1E; --light: #F2F2F7; --card: #FFFFFF; --text: #000; }
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto; }
-    body { background: var(--light); color: var(--text); line-height: 1.6; }
-    .header { background: linear-gradient(135deg, var(--primary), #5AC8FA); color: white; padding: 60px 20px 30px; text-align: center; }
-    .header h1 { font-size: 2rem; font-weight: 800; }
-    .header p { opacity: 0.9; margin-top: 8px; }
-    .tabs { display: flex; justify-content: space-around; background: var(--card); padding: 12px 0; position: sticky; top: 0; }
-    .tab { text-align: center; font-size: 0.75rem; color: var(--text-light); cursor: pointer; }
-    .tab.active { color: var(--primary); font-weight: 600; }
-    .tab-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
-    .content { padding: 20px; }
-    .section-title { font-size: 1.3rem; font-weight: 700; margin: 25px 0 15px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل المسافر Pro</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#0ea5e9">
+    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/201/201623.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-bottom: 20px;
+        }
+        .header {
+            background: rgba(255,255,255,0.95);
+            padding: 25px 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            color: #0ea5e9;
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+        .container {
+            padding: 20px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .card {
+            text-align: center;
+            padding: 30px 15px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            text-decoration: none;
+            transition: transform 0.2s;
+        }
+        .card:active {
+            transform: scale(0.95);
+        }
+        .card .icon {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+        .card .title {
+            font-weight: bold;
+            color: white;
+            font-size: 16px;
+        }
+        .card .subtitle {
+            font-size: 12px;
+            color: rgba(255,255,255,0.8);
+            margin-top: 5px;
+        }
+        .full-width {
+            grid-column: span 2;
+        }
+        .hotels { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .flights { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); }
+        .restaurants { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .cafes { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .attractions { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .footer {
+            text-align: center;
+            color: white;
+            padding: 20px;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+    </style>
 </head>
 <body>
-  <div class="header">
-    <h1>دليل المسافر Pro</h1>
-    <p>كل اللي تحتاجه للسفر في تطبيق واحد</p>
-  </div>
-  
-  <div class="tabs">
-    <div class="tab active"><span class="tab-icon">🏠</span><span>فنادق</span></div>
-    <div class="tab"><span class="tab-icon">✈️</span><span>طيران</span></div>
-    <div class="tab"><span class="tab-icon">🗺️</span><span>وجهات</span></div>
-  </div>
+    <div class="header">
+        <h1>دليل المسافر Pro</h1>
+        <p>كل اللي تحتاجه للسفر في تطبيق واحد</p>
+    </div>
 
-  <div class="content">
-    <h2 class="section-title">أهلاً بيك في دليل المسافر</h2>
-    <p>التطبيق جاهز للتثبيت دلوقتي 🚀</p>
-  </div>
+    <div class="container">
+        <div class="grid">
+            
+            <!-- 1. فنادق Booking - كل العالم -->
+            <a href="https://www.booking.com/searchresults.html?aid=1234567" target="_blank" class="card hotels">
+                <div class="icon">🏨</div>
+                <div class="title">فنادق</div>
+                <div class="subtitle">احجز بأرخص سعر</div>
+            </a>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js');
-    }
-  </script>
+            <!-- 2. طيران Skyscanner - كل العالم -->
+            <a href="https://www.skyscanner.net" target="_blank" class="card flights">
+                <div class="icon">✈️</div>
+                <div class="title">طيران</div>
+                <div class="subtitle">أرخص تذاكر</div>
+            </a>
+
+            <!-- 3. مطاعم TripAdvisor - كل العالم -->
+            <a href="https://www.tripadvisor.com/Restaurants?pid=987654" target="_blank" class="card restaurants">
+                <div class="icon">🍽️</div>
+                <div class="title">مطاعم</div>
+                <div class="subtitle">أفضل التقييمات</div>
+            </a>
+
+            <!-- 4. مقاهي TripAdvisor - كل العالم -->
+            <a href="https://www.tripadvisor.com/Search?q=cafes&pid=987654" target="_blank" class="card cafes">
+                <div class="icon">☕</div>
+                <div class="title">مقاهي</div>
+                <div class="subtitle">أماكن رايقة</div>
+            </a>
+
+            <!-- 5. أماكن سياحية TripAdvisor - كل العالم -->
+            <a href="https://www.tripadvisor.com/Attractions?pid=987654" target="_blank" class="card attractions full-width">
+                <div class="icon">🗺️</div>
+                <div class="title">أماكن سياحية</div>
+                <div class="subtitle">اكتشف أشهر المعالم حول العالم</div>
+            </a>
+
+        </div>
+    </div>
+
+    <div class="footer">
+        دليل المسافر Pro © 2026
+    </div>
+
+    <script>
+        // تسجيل Service Worker للـ PWA
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js');
+        }
+    </script>
 </body>
 </html>
