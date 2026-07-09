@@ -7,7 +7,7 @@ const urlsToCache = [
   '/icons/icon-512.png'
 ];
 
-// لما التطبيق يتثبت، خزن الملفات دي
+// Install and cache files
 self.addEventListener('install', event => {
   self.skipWaiting();
   event.waitUntil(
@@ -18,7 +18,7 @@ self.addEventListener('install', event => {
   );
 });
 
-// لما المستخدم يفتح صفحة، هاتها من الكاش الأول
+// Serve cached content when offline
 self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
@@ -26,7 +26,7 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// امسح الكاش القديم لما نحدث
+// Clean up old caches
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(keys => Promise.all(
