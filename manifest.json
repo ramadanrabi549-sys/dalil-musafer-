@@ -1,17 +1,22 @@
 {
   "name": "دليل المسافر Pro",
   "short_name": "دليل المسافر",
-  "description": "كل اللي تحتاجه للسفر في تطبيق واحد",
-  "start_url": "/dalil-musafer-/",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#0EAE69",
-  "theme_color": "#0EAE69",
-  "orientation": "portrait",
+  "background_color": "#0b1220",
+  "theme_color": "#0b1220",
   "icons": [
     {
-      "src": "icon-512.jpeg",
+      "src": "./icon-192.png",
+      "sizes": "192x192", 
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/png", 
+      "purpose": "any maskable"
     }
   ]
 }
