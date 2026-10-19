@@ -1,147 +1,159 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دليل المسافر Pro</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#0ea5e9">
-    <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/201/201623.png">
-    
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            padding-bottom: 20px;
-        }
-        .header {
-            background: rgba(255,255,255,0.95);
-            padding: 25px 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        .header h1 {
-            color: #0ea5e9;
-            font-size: 28px;
-            margin-bottom: 5px;
-        }
-        .header p {
-            color: #666;
-            font-size: 14px;
-        }
-        .container {
-            padding: 20px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        .card {
-            text-align: center;
-            padding: 30px 15px;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            text-decoration: none;
-            transition: transform 0.2s;
-        }
-        .card:active {
-            transform: scale(0.95);
-        }
-        .card .icon {
-            font-size: 50px;
-            margin-bottom: 10px;
-        }
-        .card .title {
-            font-weight: bold;
-            color: white;
-            font-size: 16px;
-        }
-        .card .subtitle {
-            font-size: 12px;
-            color: rgba(255,255,255,0.8);
-            margin-top: 5px;
-        }
-        .full-width {
-            grid-column: span 2;
-        }
-        .hotels { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .flights { background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%); }
-        .restaurants { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .cafes { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .attractions { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-        .footer {
-            text-align: center;
-            color: white;
-            padding: 20px;
-            font-size: 12px;
-            opacity: 0.8;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دليل المسافر Pro</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0ea5e9">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
+body{background:linear-gradient(135deg,#667eea,#764ba2);min-height:100vh;padding-bottom:24px;color:#222}
+.header{background:rgba(255,255,255,.95);padding:22px 16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.header h1{color:#0ea5e9;font-size:26px;margin-bottom:4px}
+.header p{color:#666;font-size:14px}
+.box{background:#fff;margin:14px;padding:14px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+.row{display:flex;gap:8px;margin-bottom:8px}
+input{flex:1;min-width:0;padding:12px;border:1px solid #ccc;border-radius:10px;font-size:16px}
+button{padding:12px 14px;border:0;border-radius:10px;background:#0ea5e9;color:#fff;font-size:15px;font-weight:bold}
+button.alt{background:#764ba2;width:100%}
+#where{font-size:13px;color:#555;margin-top:8px}
+.tabs{display:flex;gap:6px;margin:0 14px 10px;overflow-x:auto}
+.tabs button{background:rgba(255,255,255,.85);color:#333;white-space:nowrap}
+.tabs button.on{background:#0ea5e9;color:#fff}
+#map{height:260px;margin:0 14px 10px;border-radius:16px;overflow:hidden}
+.item{background:#fff;margin:0 14px 8px;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.item b{display:block;margin-bottom:2px}
+.item small{color:#666}
+.acts{display:flex;gap:8px;margin-top:8px}
+.acts a{flex:1;text-align:center;padding:9px;border-radius:9px;background:#e0f2fe;color:#0369a1;text-decoration:none;font-size:14px}
+.msg{color:#fff;text-align:center;padding:14px}
+.links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px}
+.links a{text-align:center;padding:16px 8px;border-radius:16px;color:#fff;text-decoration:none;font-weight:bold}
+.flights{background:linear-gradient(135deg,#0ea5e9,#0284c7)}
+.hotels{background:linear-gradient(135deg,#f093fb,#f5576c)}
+.footer{text-align:center;color:#fff;font-size:12px;opacity:.8;padding:10px}
+</style>
 </head>
 <body>
-    <div class="header">
-        <h1>دليل المسافر Pro</h1>
-        <p>كل اللي تحتاجه للسفر في تطبيق واحد</p>
-    </div>
+<div class="header">
+  <h1>دليل المسافر Pro</h1>
+  <p>اكتشف الأماكن القريبة منك في أي مدينة</p>
+</div>
 
-    <div class="container">
-        <div class="grid">
-            
-            <!-- 1. فنادق Booking - كل العالم -->
-            <a href="https://www.booking.com/searchresults.html?aid=1234567" target="_blank" class="card hotels">
-                <div class="icon">🏨</div>
-                <div class="title">فنادق</div>
-                <div class="subtitle">احجز بأرخص سعر</div>
-            </a>
+<div class="box">
+  <div class="row">
+    <input id="city" placeholder="اكتب مدينة، مثال: روما">
+    <button id="btnCity">بحث</button>
+  </div>
+  <button class="alt" id="btnGps">📍 استخدم موقعي</button>
+  <div id="where">اختار مدينة أو موقعك علشان تبدأ</div>
+</div>
 
-            <!-- 2. طيران Skyscanner - كل العالم -->
-            <a href="https://www.skyscanner.net" target="_blank" class="card flights">
-                <div class="icon">✈️</div>
-                <div class="title">طيران</div>
-                <div class="subtitle">أرخص تذاكر</div>
-            </a>
+<div class="tabs">
+  <button data-cat="hotel">🏨 فنادق</button>
+  <button data-cat="restaurant" class="on">🍽️ مطاعم</button>
+  <button data-cat="cafe">☕ مقاهي</button>
+  <button data-cat="attraction">🗺️ أماكن سياحية</button>
+</div>
 
-            <!-- 3. مطاعم TripAdvisor - كل العالم -->
-            <a href="https://www.tripadvisor.com/Restaurants?pid=987654" target="_blank" class="card restaurants">
-                <div class="icon">🍽️</div>
-                <div class="title">مطاعم</div>
-                <div class="subtitle">أفضل التقييمات</div>
-            </a>
+<div id="map"></div>
+<div id="list"></div>
 
-            <!-- 4. مقاهي TripAdvisor - كل العالم -->
-            <a href="https://www.tripadvisor.com/Search?q=cafes&pid=987654" target="_blank" class="card cafes">
-                <div class="icon">☕</div>
-                <div class="title">مقاهي</div>
-                <div class="subtitle">أماكن رايقة</div>
-            </a>
+<div class="links">
+  <!-- حط روابط الشراكة بتاعتك مكان الروابط دي -->
+  <a class="flights" href="https://www.skyscanner.net" target="_blank" rel="noopener">✈️ حجز طيران</a>
+  <a class="hotels" href="https://www.booking.com" target="_blank" rel="noopener">🏨 حجز فنادق</a>
+</div>
 
-            <!-- 5. أماكن سياحية TripAdvisor - كل العالم -->
-            <a href="https://www.tripadvisor.com/Attractions?pid=987654" target="_blank" class="card attractions full-width">
-                <div class="icon">🗺️</div>
-                <div class="title">أماكن سياحية</div>
-                <div class="subtitle">اكتشف أشهر المعالم حول العالم</div>
-            </a>
+<div class="footer">دليل المسافر Pro © 2026 · الخرائط © OpenStreetMap</div>
 
-        </div>
-    </div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const CATS={
+  hotel:'nwr["tourism"~"^(hotel|guest_house|hostel)$"]',
+  restaurant:'nwr["amenity"="restaurant"]',
+  cafe:'nwr["amenity"="cafe"]',
+  attraction:'nwr["tourism"~"^(attraction|museum|viewpoint|gallery)$"]'
+};
+let pos=null,cat='restaurant';
+const $=id=>document.getElementById(id);
+const map=L.map('map').setView([30.04,31.23],4);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+const layer=L.layerGroup().addTo(map);
 
-    <div class="footer">
-        دليل المسافر Pro © 2026
-    </div>
+function dist(a,b,c,d){
+  const R=6371,r=Math.PI/180,x=(c-a)*r,y=(d-b)*r;
+  const h=Math.sin(x/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
 
-    <script>
-        // تسجيل Service Worker للـ PWA
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js');
-        }
-    </script>
+function setPos(lat,lon,label){
+  pos={lat,lon};
+  $('where').textContent='📍 '+label;
+  map.setView([lat,lon],14);
+  search();
+}
+
+async function search(){
+  const list=$('list');
+  if(!pos){list.innerHTML='';return;}
+  list.innerHTML='<div class="msg">جاري البحث...</div>';
+  layer.clearLayers();
+  const q='[out:json][timeout:25];('+CATS[cat]+'(around:3000,'+pos.lat+','+pos.lon+'););out center 80;';
+  try{
+    const r=await fetch('https://overpass-api.de/api/interpreter',{method:'POST',body:new URLSearchParams({data:q})});
+    if(!r.ok)throw new Error(r.status);
+    const j=await r.json();
+    const items=j.elements.map(e=>{
+      const lat=e.lat??(e.center&&e.center.lat),lon=e.lon??(e.center&&e.center.lon),t=e.tags||{};
+      return{name:t['name:ar']||t.name,lat,lon,km:lat==null?0:dist(pos.lat,pos.lon,lat,lon)};
+    }).filter(x=>x.name&&x.lat!=null).sort((a,b)=>a.km-b.km).slice(0,30);
+    list.innerHTML='';
+    if(!items.length){list.innerHTML='<div class="msg">مفيش نتائج قريبة. جرّب مدينة تانية.</div>';return;}
+    items.forEach(x=>{
+      L.marker([x.lat,x.lon]).addTo(layer).bindPopup(x.name);
+      const d=document.createElement('div');d.className='item';
+      const b=document.createElement('b');b.textContent=x.name;
+      const s=document.createElement('small');s.textContent=x.km.toFixed(1)+' كم';
+      const acts=document.createElement('div');acts.className='acts';
+      acts.innerHTML='<a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+x.lat+','+x.lon+'">الخريطة</a><a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+x.lat+','+x.lon+'">اتجاهات</a>';
+      d.append(b,s,acts);list.appendChild(d);
+    });
+  }catch(e){
+    list.innerHTML='<div class="msg">تعذر جلب البيانات. تأكد من النت وجرّب تاني.</div>';
+  }
+}
+
+$('btnGps').onclick=()=>{
+  if(!navigator.geolocation){$('where').textContent='الموقع مش مدعوم في المتصفح ده.';return;}
+  $('where').textContent='جاري تحديد موقعك...';
+  navigator.geolocation.getCurrentPosition(
+    p=>setPos(p.coords.latitude,p.coords.longitude,'موقعك الحالي'),
+    ()=>{$('where').textContent='تعذر تحديد الموقع. اكتب اسم مدينة بدل كده.';},
+    {enableHighAccuracy:true,timeout:15000}
+  );
+};
+
+$('btnCity').onclick=async()=>{
+  const c=$('city').value.trim();
+  if(!c)return;
+  $('where').textContent='جاري البحث عن المدينة...';
+  try{
+    const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&accept-language=ar&q='+encodeURIComponent(c));
+    const j=await r.json();
+    if(!j.length){$('where').textContent='المدينة مش موجودة.';return;}
+    setPos(parseFloat(j[0].lat),parseFloat(j[0].lon),j[0].display_name);
+  }catch(e){$('where').textContent='تعذر البحث عن المدينة.';}
+};
+
+document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('on'));
+  b.classList.add('on');cat=b.dataset.cat;search();
+});
+
+if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js');}
+</script>
 </body>
 </html>
