@@ -1,29 +1,14 @@
-{
-  "id": "./",
-  "name": "دليل المسافر Pro",
-  "short_name": "دليل المسافر",
-  "description": "اكتشف الفنادق والمطاعم والمقاهي والأماكن السياحية القريبة منك في أي مدينة.",
-  "start_url": "./",
-  "scope": "./",
-  "display": "standalone",
-  "orientation": "portrait",
-  "lang": "ar",
-  "dir": "rtl",
-  "categories": ["travel"],
-  "background_color": "#667eea",
-  "theme_color": "#0ea5e9",
-  "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    }
-  ]
-}
+"icons": [
+  {
+    "src": "./icon-192.png",
+    "sizes": "1600x1600",
+    "type": "image/png",
+    "purpose": "any"
+  },
+  {
+    "src": "./icon-512.png",
+    "sizes": "1600x1600",
+    "type": "image/png",
+    "purpose": "any"
+  }
+]
