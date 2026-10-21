@@ -1,8 +1,0 @@
-[{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "com.ramadanrabi.dalilmusafer",
-    "sha256_cert_fingerprints": ["57:AC:17:6B:1E:D9:33:2E:A7:1D:1B:6F:01:ED:BA:BD:D0:CD:71:83:63:5B:42:33:DE:17:D6:AB:E6:D2:E3:8F"]
-  }
-}]
