@@ -3,84 +3,114 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>دليل المسافر: أماكن قريبة</title>
+<title>دليل المسافر</title>
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0a5e69">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<meta name="theme-color" content="#0ea5e9">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,-apple-system,sans-serif}
-body{background:linear-gradient(135deg,#66fea,#764ba2);min-height:100vh;padding-bottom:24px;color:#222}
-.header{background:rgba(255,255,255,.9);padding:22px 16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.1)}
-.header h1{color:#0a5e69;font-size:24px;margin-bottom:4px}
+body{background:linear-gradient(135deg,#667eea,#764ba2);min-height:100vh;padding-bottom:24px;color:#222}
+.header{background:rgba(255,255,255,.95);padding:22px 16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.1)}
+.header h1{color:#0ea5e9;font-size:24px;margin-bottom:4px}
 .header p{color:#666;font-size:14px}
-.box{background:#fff;margin:14px;padding:14px 16px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.15)}
+.box{background:#fff;margin:14px;padding:14px;border-radius:16px;box-shadow:0 4px 15px rgba(0,0,0,.15)}
 .row{display:flex;gap:8px;margin-bottom:8px}
-input{flex:1;min-width:0;padding:12px;border:1px solid #ccc;border-radius:10px;font-size:16px}
-button{padding:7px 14px;border:0;border-radius:10px;background:#0a5e69;color:#fff;font-size:15px;font-weight:bold;cursor:pointer}
+input,select{flex:1;min-width:0;padding:12px;border:1px solid #ccc;border-radius:10px;font-size:16px;background:#fff}
+button{padding:12px 14px;border:0;border-radius:10px;background:#0ea5e9;color:#fff;font-size:15px;font-weight:bold}
 button.alt{background:#764ba2;width:100%}
+label{font-size:13px;color:#555;align-self:center;white-space:nowrap}
 #where{font-size:13px;color:#555;margin-top:8px}
-.tabs{display:flex;gap:5px;margin:0 14px 10px;overflow-x:auto}
+.tabs{display:flex;gap:6px;margin:0 14px 10px;overflow-x:auto;padding-bottom:4px}
 .tabs button{background:rgba(255,255,255,.85);color:#333;white-space:nowrap}
-.tabs button.on{background:#0a5e69;color:#fff}
-#map{height:380px;margin:0 14px;border-radius:16px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.2)}
+.tabs button.on{background:#0ea5e9;color:#fff}
+#map{height:260px;margin:0 14px 10px;border-radius:16px;overflow:hidden}
 .item{background:#fff;margin:0 14px 8px;padding:12px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.12)}
 .item b{display:block;margin-bottom:2px}
 .item small{color:#666}
 .acts{display:flex;gap:8px;margin-top:8px}
-.acts a{flex:1;text-align:center;padding:9px;border-radius:9px;background:#f0f2fe;color:#036a1;text-decoration:none;font-size:13px}
+.acts a{flex:1;text-align:center;padding:9px;border-radius:9px;background:#e0f2fe;color:#0369a1;text-decoration:none;font-size:14px}
 .msg{color:#fff;text-align:center;padding:14px}
+.more{display:block;margin:6px auto 12px;background:#fff;color:#764ba2}
 .links{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px}
 .links a{text-align:center;padding:16px 8px;border-radius:16px;color:#fff;text-decoration:none;font-weight:bold}
 .flights{background:linear-gradient(135deg,#0ea5e9,#0284c7)}
-.hotels{background:linear-gradient(135deg,#f03fb,#f57c6c)}
+.hotels{background:linear-gradient(135deg,#f093fb,#f5576c)}
 .footer{text-align:center;color:#fff;font-size:12px;opacity:.8;padding:10px}
 .footer a{color:#fff}
 </style>
 </head>
 <body>
 <div class="header">
-<h1>دليل المسافر: أماكن قريبة</h1>
-<p>اكتشف الأماكن القريبة منك في أي مدينة</p>
+  <h1>دليل المسافر</h1>
+  <p>ابحث عن أي مدينة أو مكان في العالم</p>
 </div>
 
 <div class="box">
-<div class="row">
-<input id="city" placeholder="اكتب مدينة، مثال: روما">
-<button id="btnCity">بحث</button>
-</div>
-<button class="alt" id="btnGps">📍 استخدم موقعي</button>
-<div id="where">ادخل مدينة أو موقعك علشان تبدأ</div>
+  <div class="row">
+    <input id="city" placeholder="اكتب مدينة أو مكان، مثال: روما">
+    <button id="btnCity">بحث</button>
+  </div>
+  <button class="alt" id="btnGps">📍 استخدم موقعي</button>
+  <div class="row" style="margin-top:10px;margin-bottom:0">
+    <label for="rad">نطاق البحث:</label>
+    <select id="rad">
+      <option value="1000">1 كم</option>
+      <option value="3000">3 كم</option>
+      <option value="5000" selected>5 كم</option>
+      <option value="10000">10 كم</option>
+      <option value="25000">25 كم</option>
+    </select>
+  </div>
+  <div id="where">اختار مدينة أو موقعك علشان تبدأ</div>
 </div>
 
 <div class="tabs">
-<button data-cat="hotel">🏨 فندق</button>
-<button data-cat="restaurant" class="on">🍽️ مطاعم</button>
-<button data-cat="cafe">☕ مقاهي</button>
-<button data-cat="attraction">🗺️ أماكن سياحية</button>
+  <button data-cat="all">🌍 كل الأماكن</button>
+  <button data-cat="hotel">🏨 فنادق</button>
+  <button data-cat="restaurant" class="on">🍽️ مطاعم</button>
+  <button data-cat="cafe">☕ مقاهي</button>
+  <button data-cat="attraction">🗺️ أماكن سياحية</button>
+  <button data-cat="shopping">🛍️ تسوق</button>
+  <button data-cat="health">💊 صحة</button>
+  <button data-cat="money">🏦 بنوك وصرافات</button>
+  <button data-cat="fuel">⛽ بنزين</button>
+  <button data-cat="worship">🕌 أماكن عبادة</button>
 </div>
 
 <div id="map"></div>
 <div id="list"></div>
 
 <div class="links">
-<a class="flights" href="https://www.skyscanner.net" target="_blank" rel="noopener">✈️ حجز طيران</a>
-<a class="hotels" href="https://www.booking.com" target="_blank" rel="noopener">🏨 حجز فندقي</a>
+  <a class="flights" href="https://www.skyscanner.net" target="_blank" rel="noopener">✈️ حجز طيران</a>
+  <a class="hotels" href="https://www.booking.com" target="_blank" rel="noopener">🏨 حجز فنادق</a>
 </div>
 
-<div class="footer">دليل المسافر © 2026 - الخرائط © OpenStreetMap - <a href="privacy.html">الخصوصية</a></div>
+<div class="footer">دليل المسافر © 2026 · الخرائط © OpenStreetMap · <a href="privacy.html">الخصوصية</a></div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
 const CATS={
-  hotel: 'nwr["tourism"~"hotel|guest_house|hostel"]',
-  restaurant: 'nwr["amenity"="restaurant"]',
-  cafe: 'nwr["amenity"="cafe"]',
-  attraction: 'nwr["tourism"~"attraction|museum|viewpoint|gallery"]'
+  all:[
+    'nwr["name"]["tourism"]',
+    'nwr["name"]["amenity"~"^(restaurant|cafe|fast_food|bar|pharmacy|hospital|clinic|bank|fuel|place_of_worship|cinema|theatre|marketplace)$"]',
+    'nwr["name"]["shop"~"^(supermarket|mall|department_store)$"]'
+  ],
+  hotel:['nwr["tourism"~"^(hotel|guest_house|hostel|motel|apartment)$"]'],
+  restaurant:['nwr["amenity"~"^(restaurant|fast_food)$"]'],
+  cafe:['nwr["amenity"="cafe"]'],
+  attraction:['nwr["tourism"~"^(attraction|museum|viewpoint|gallery|zoo|theme_park)$"]','nwr["historic"]["name"]'],
+  shopping:['nwr["shop"~"^(mall|supermarket|department_store|clothes|convenience)$"]','nwr["amenity"="marketplace"]'],
+  health:['nwr["amenity"~"^(pharmacy|hospital|clinic)$"]'],
+  money:['nwr["amenity"~"^(bank|atm)$"]'],
+  fuel:['nwr["amenity"="fuel"]'],
+  worship:['nwr["amenity"="place_of_worship"]']
 };
-let pos=null,cat='restaurant';
+const NAMES={restaurant:'مطعم',fast_food:'وجبات سريعة',cafe:'مقهى',bar:'بار',pharmacy:'صيدلية',hospital:'مستشفى',clinic:'عيادة',bank:'بنك',atm:'صراف آلي',fuel:'محطة بنزين',place_of_worship:'مكان عبادة',cinema:'سينما',theatre:'مسرح',marketplace:'سوق',hotel:'فندق',guest_house:'بيت ضيافة',hostel:'نزل',motel:'موتيل',apartment:'شقق فندقية',attraction:'معلم سياحي',museum:'متحف',viewpoint:'نقطة إطلالة',gallery:'معرض',zoo:'حديقة حيوان',theme_park:'مدينة ملاهي',supermarket:'سوبر ماركت',mall:'مول',department_store:'متجر كبير',clothes:'ملابس',convenience:'بقالة'};
+const ENDPOINTS=['https://overpass-api.de/api/interpreter','https://overpass.kumi.systems/api/interpreter'];
+let pos=null,cat='restaurant',rad=5000,items=[],shown=0;
 const $=id=>document.getElementById(id);
-const map=L.map('map').setView([30.04,31.23],6);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
+const map=L.map('map').setView([30.04,31.23],4);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map);
 const layer=L.layerGroup().addTo(map);
 
 function dist(a,b,c,d){
@@ -88,63 +118,106 @@ function dist(a,b,c,d){
   const h=Math.sin(x/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin(y/2)**2;
   return 2*R*Math.asin(Math.sqrt(h));
 }
+function zoomFor(r){return r<=1000?15:r<=3000?14:r<=5000?13:r<=10000?12:11;}
+function typeOf(t){
+  const k=t.amenity||t.tourism||t.shop;
+  return NAMES[k]||(t.historic?'موقع تاريخي':'');
+}
+
+async function overpass(q){
+  let err;
+  for(const u of ENDPOINTS){
+    try{
+      const r=await fetch(u,{method:'POST',body:new URLSearchParams({data:q})});
+      if(!r.ok)throw new Error(r.status);
+      return await r.json();
+    }catch(e){err=e;}
+  }
+  throw err;
+}
 
 function setPos(lat,lon,label){
   pos={lat,lon};
   $('where').textContent='📍 '+label;
-  map.setView([lat,lon],17);
+  map.setView([lat,lon],zoomFor(rad));
   search();
+}
+
+function render(note){
+  const list=$('list');
+  list.innerHTML='';
+  if(note){const n=document.createElement('div');n.className='msg';n.textContent=note;list.appendChild(n);}
+  if(!items.length){
+    const n=document.createElement('div');n.className='msg';
+    n.textContent='مفيش نتائج هنا. جرّب نطاق أكبر أو قسم تاني.';
+    list.appendChild(n);return;
+  }
+  items.slice(0,shown).forEach(x=>{
+    const d=document.createElement('div');d.className='item';
+    const b=document.createElement('b');b.textContent=x.name;
+    const s=document.createElement('small');
+    s.textContent=(x.type?x.type+' · ':'')+x.km.toFixed(1)+' كم';
+    const acts=document.createElement('div');acts.className='acts';
+    acts.innerHTML='<a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+x.lat+','+x.lon+'">الخريطة</a><a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination='+x.lat+','+x.lon+'">اتجاهات</a>';
+    d.append(b,s,acts);list.appendChild(d);
+  });
+  if(shown<items.length){
+    const m=document.createElement('button');
+    m.className='more';m.textContent='عرض المزيد ('+(items.length-shown)+')';
+    m.onclick=()=>{shown=Math.min(shown+40,items.length);render(note);};
+    list.appendChild(m);
+  }
 }
 
 async function search(){
   const list=$('list');
   if(!pos){list.innerHTML='';return;}
+  let r=rad,note='';
+  if(cat==='all'&&r>5000){r=5000;note='في "كل الأماكن" البحث بحد أقصى 5 كم علشان النتايج تفضل سريعة.';}
   list.innerHTML='<div class="msg">جاري البحث...</div>';
   layer.clearLayers();
-  const q='[out:json][timeout:25];('+CATS[cat]+'(around:3000,'+pos.lat+','+pos.lon+'););out center 80;';
+  const q='[out:json][timeout:40];('+CATS[cat].map(f=>f+'(around:'+r+','+pos.lat+','+pos.lon+');').join('')+');out center 200;';
   try{
-    const r=await fetch('https://overpass-api.de/api/interpreter',{method:'POST',body:new URLSearchParams({data:[STRIPPED]
-    if(!r.ok)throw new Error(r.status);
-    const j=await r.json();
-    const items=j.elements.map(e=>{
+    const j=await overpass(q);
+    items=j.elements.map(e=>{
       const lat=e.lat??(e.center&&e.center.lat),lon=e.lon??(e.center&&e.center.lon),t=e.tags||{};
-      return {name:t.name||'بدون اسم',lat:lat,lon:lon,km:dist(pos.lat,pos.lon,lat,lon)};
-    }).filter(x=>x.name&&x.lat&&x.lon).sort((a,b)=>a.km-b.km).slice(0,30);
-    list.innerHTML='';
-    if(!items.length){list.innerHTML='<div class="msg">ما فيش نتائج قريبة، جرب صنف تاني</div>';return;}
-    items.forEach(x=>{
-      L.marker([x.lat,x.lon]).addTo(layer).bindPopup(x.name).on('click',()=>{map.setView([x.lat,x.lon],18);});
-      const d=document.createElement('div');d.className='item';
-      const b=document.createElement('b');b.textContent=x.name;
-      const s=document.createElement('small');s.textContent=x.km.toFixed(1)+' كم';
-      const acts=document.createElement('div');acts.className='acts';
-      acts.innerHTML='<a target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+x.lat+','+x.lon+'">📍 فتح في الخريطة</a>';
-      d.append(b,s,acts);list.appendChild(d);
-    });
+      return{name:t['name:ar']||t['name:en']||t.name,lat,lon,type:typeOf(t),km:lat==null?0:dist(pos.lat,pos.lon,lat,lon)};
+    }).filter(x=>x.name&&x.lat!=null).sort((a,b)=>a.km-b.km).slice(0,150);
+    items.forEach(x=>L.marker([x.lat,x.lon]).addTo(layer).bindPopup(x.name));
+    shown=Math.min(40,items.length);
+    render(note);
   }catch(e){
-    list.innerHTML='<div class="msg">مش قادر أجيب البيانات، تأكد من النت وحاول تاني</div>';
+    items=[];
+    list.innerHTML='<div class="msg">تعذر جلب البيانات (الخادم مشغول أو النت ضعيف). جرّب تاني بعد شوية أو قلّل النطاق.</div>';
   }
 }
 
 $('btnGps').onclick=()=>{
-  if(!navigator.geolocation){$('where').textContent='الموقع مش مدعوم في المتصفح ده';return;}
+  if(!navigator.geolocation){$('where').textContent='الموقع مش مدعوم في المتصفح ده.';return;}
   $('where').textContent='جاري تحديد موقعك...';
-  navigator.geolocation.getCurrentPosition(p=>{
-    setPos(p.coords.latitude,p.coords.longitude,'موقعك الحالي');
-  },()=>{$('where').textContent='مقدرتش أجيب موقعك، اكتب اسم مدينة يدوياً';},
-  {enableHighAccuracy:true,timeout:15000});
+  navigator.geolocation.getCurrentPosition(
+    p=>setPos(p.coords.latitude,p.coords.longitude,'موقعك الحالي'),
+    ()=>{$('where').textContent='تعذر تحديد الموقع. اكتب اسم مدينة بدل كده.';},
+    {enableHighAccuracy:true,timeout:15000}
+  );
 };
 
 $('btnCity').onclick=async()=>{
   const c=$('city').value.trim();
   if(!c)return;
-  $('where').textContent='جاري البحث عن المدينة...';
+  $('where').textContent='جاري البحث...';
   try{
     const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&accept-language=ar&q='+encodeURIComponent(c));
     const j=await r.json();
-    if(!j.length){$('where').textContent='المدينة مش موجودة';return;}
+    if(!j.length){$('where').textContent='مالقيتش المكان ده. جرّب اسم تاني.';return;}
     setPos(parseFloat(j[0].lat),parseFloat(j[0].lon),j[0].display_name);
-  }catch(e){$('where').textContent='مش قادر ألاقي المدينة';}
+  }catch(e){$('where').textContent='تعذر البحث. تأكد من النت.';}
+};
+$('city').addEventListener('keydown',e=>{if(e.key==='Enter')$('btnCity').click();});
+
+$('rad').onchange=()=>{
+  rad=parseInt($('rad').value,10);
+  if(pos){map.setView([pos.lat,pos.lon],zoomFor(rad));search();}
 };
 
 document.querySelectorAll('.tabs button').forEach(b=>b.onclick=()=>{
